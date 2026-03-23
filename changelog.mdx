@@ -1,0 +1,149 @@
+---
+title: Changelog
+description: Track the latest updates and improvements to Undersigned.co.
+---
+
+## Latest Updates
+
+<Callout kind="info">
+Subscribe to our changelog RSS feed or join the Undersigned.co community Discord to stay informed about new releases and improvements.
+</Callout>
+
+Stay current with Undersigned.co's evolution. We release updates frequently to enhance your e-signature workflows, add new features like advanced templates and better tracking, and fix issues for smoother operation.
+
+<Columns cols={3}>
+  <Card title="Major Releases" icon="git-branch" href="#v1-2-0">
+    Key feature additions and breaking changes.
+  </Card>
+  <Card title="Bug Fixes" icon="bug" href="#v1-1-0">
+    Stability and performance improvements.
+  </Card>
+  <Card title="Migration Guide" icon="settings" href="#migration">
+    Steps to upgrade safely.
+  </Card>
+</Columns>
+
+<Update label="2024-10-15" description="v1.2.0" tags={["feature", "improvement"]}>
+
+## New Features
+
+- Added public template sharing links for faster client intake workflows
+- Introduced drag-and-drop field assignment per recipient
+- New dashboard progress tracking with real-time signer status updates
+
+## Improvements
+
+- Enhanced audit trail with timestamped activity logs for compliance
+- Optimized upload speeds for large PDF and DOCX files
+- Better mobile signing experience with responsive controls
+
+</Update>
+
+<Update label="2024-09-20" description="v1.1.0" tags={["bugfix", "improvement"]}>
+
+## Bug Fixes
+
+- Fixed signing order issues when multiple recipients are involved
+- Resolved completion package download failures for envelopes with attachments
+- Corrected reminder email timing inaccuracies
+
+## Improvements
+
+- Streamlined template creation with reusable field presets
+- Added branding customization for sender emails and signer portals
+- Performance boost for high-volume envelope management
+
+</Update>
+
+<Update label="2024-08-10" description="v1.0.0" tags={["feature", "breaking"]}>
+
+## New Features
+
+- Core e-signature workflow with PDF/DOC/DOCX upload support
+- Role-based routing and sequential signing order
+- Full audit-ready completion packages
+
+## Breaking Changes
+
+- Updated API authentication to use Bearer tokens only (deprecated API keys)
+- Envelope status endpoints now return structured JSON (see migration notes)
+
+</Update>
+
+## Migration Guide
+
+For upgrades involving breaking changes, follow these steps:
+
+<Steps>
+  <Step title="Review Changes" icon="book-open">
+
+  Check the tags on each release: `{"breaking"}` indicates potential impacts.
+
+  </Step>
+  <Step title="Update Authentication" icon="shield">
+
+  ```javascript
+  // Old way (deprecated)
+  fetch('https://api.example.com/envelopes', {
+    headers: { 'X-API-Key': 'YOUR_API_KEY' }
+  });
+
+  // New way (required)
+  fetch('https://api.example.com/envelopes', {
+    headers: { 'Authorization': `Bearer ${YOUR_TOKEN}` }
+  });
+  ```
+
+  </Step>
+  <Step title="Test Envelopes" icon="play">
+
+  Create a test envelope at [https://dashboard.example.com](https://dashboard.example.com) to verify workflows.
+
+  </Step>
+  <Step title="Deploy" icon="rocket">
+
+  Roll out to production after confirming no issues.
+
+  </Step>
+</Steps>
+
+<Tabs>
+  <Tab title="Node.js" icon="nodejs">
+
+  ```javascript
+  const response = await fetch('https://api.example.com/envelopes', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${YOUR_TOKEN}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      document_url: 'https://your-doc.pdf',
+      signers: [{ email: 'signer@example.com', role: 'signer' }]
+    })
+  });
+  ```
+
+  </Tab>
+  <Tab title="Python" icon="python">
+
+  ```python
+  import requests
+
+  headers = {
+      'Authorization': f'Bearer {YOUR_TOKEN}',
+      'Content-Type': 'application/json'
+  }
+  data = {
+      'document_url': 'https://your-doc.pdf',
+      'signers': [{'email': 'signer@example.com', 'role': 'signer'}]
+  }
+  response = requests.post('https://api.example.com/envelopes', headers=headers, json=data)
+  ```
+
+  </Tab>
+</Tabs>
+
+<Callout kind="tip" title="Next Steps">
+Explore the [Quickstart](/quickstart) guide or [Authentication](/authentication) docs for integration details.
+</Callout>
